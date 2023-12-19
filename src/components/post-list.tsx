@@ -1,6 +1,5 @@
-import Link from "next/link";
 import { getPosts } from "@/lib/blog";
-import { getTrucatedBody } from "@/lib/utils";
+import PostItem from "./post-item";
 
 interface PostListProps {
   selectedCategory?: string;
@@ -12,36 +11,7 @@ async function PostList({ selectedCategory }: PostListProps) {
   return (
     <section>
       {posts.map((post) => {
-        return (
-          <article
-            key={post.id}
-            className="border-t border-main pt-4 pb-16 grid md:grid-cols-2 gap-x-10 gap-y-6"
-          >
-            <div>
-              <h2 className="text-2xl md:text-4xl">
-                <Link
-                  href="/[id]"
-                  as={`/${post.id}`}
-                  className="text-main"
-                >
-                  {post.title}
-                </Link>
-              </h2>
-
-              <p className="text-lg mt-4 italic">{post.category.name}</p>
-            </div>
-
-            <p>
-              <Link
-                href="/blog/[id]"
-                as={`/blog/${post.id}`}
-                className="text-main text-sm md:text-base"
-              >
-                {getTrucatedBody(post.body)}
-              </Link>
-            </p>
-          </article>
-        );
+        return <PostItem post={post} key={post.id} />;
       })}
 
       {posts.length === 0 && (
